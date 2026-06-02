@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>StudyGenie | Multi-Page Website</title>
+  <!-- Google Fonts + modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    /* ========== NAVIGATION BAR (consistent across all pages) ========== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(108, 43, 217, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, #3A0CA3, #6C2BD9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .logo i {
+      background: linear-gradient(135deg, #6C2BD9, #3A0CA3);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 1.7rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 500;
+      transition: color 0.2s;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #6C2BD9;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #6C2BD9, #3A0CA3);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      gap: 6px;
+    }
+
+    .bar {
+      width: 28px;
+      height: 2.5px;
+      background-color: #1e293b;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .page-wrapper {
+      min-height: calc(100vh - 280px);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    /* Hero Section (Home) */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0f172a, #4c1d95);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-bottom: 2rem;
+    }
+
+    .hero-image {
+      flex: 1;
+      text-align: center;
+    }
+
+    .hero-image svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 48px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6C2BD9, #3A0CA3);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px rgba(108, 43, 217, 0.4);
+    }
+
+    /* Features Grid (Home) */
+    .section-title {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 28px;
+      text-align: center;
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.06);
+      transition: all 0.3s;
+      border: 1px solid #e2e8f0;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: #c4b5fd;
+      box-shadow: 0 20px 30px -12px rgba(108, 43, 217, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* About Page */
+    .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: white;
+      border-radius: 20px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #6C2BD9;
+    }
+
+    /* Services Page */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 28px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid #e2e8f0;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: #6C2BD9;
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Contact Page */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+
+    .contact-form {
+      flex: 1;
+      background: white;
+      padding: 2rem;
+      border-radius: 32px;
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 24px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #6C2BD9;
+    }
+
+    .contact-info {
+      flex: 1;
+      background: linear-gradient(135deg, #6C2BD9, #3A0CA3);
+      padding: 2rem;
+      border-radius: 32px;
+      color: white;
+    }
+
+    .contact-info h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer (consistent) */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 3rem 2rem 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand h3 {
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #a78bfa;
+    }
+
+    .social-icons a {
+      color: #cbd5e1;
+      font-size: 1.3rem;
+      margin-right: 1rem;
+      transition: color 0.2s;
+    }
+
+    .social-icons a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+      .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+      }
+      .nav-menu.active {
+        left: 0;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .container {
+        padding: 2rem 1.5rem;
+      }
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo" data-page="home">
+      <i class="fas fa-brain"></i>
+      <span>StudyGenie</span>
+    </a>
+    <button class="hamburger" id="hamburgerBtn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+      <li><a href="#" class="nav-link" data-page="about">About</a></li>
+      <li><a href="#" class="nav-link" data-page="services">Services</a></li>
+      <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Content Area (Dynamic Page Loading) -->
+<main class="page-wrapper" id="mainContent">
+  <!-- Content will be injected dynamically -->
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3><i class="fas fa-brain"></i> StudyGenie</h3>
+      <p>AI-powered learning for the modern student.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="#" data-page="home">Home</a></p>
+        <p><a href="#" data-page="about">About</a></p>
+        <p><a href="#" data-page="services">Services</a></p>
+        <p><a href="#" data-page="contact">Contact</a></p>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <p><a href="#">Blog</a></p>
+        <p><a href="#">Help Center</a></p>
+        <p><a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+  <div class="copyright">
+    <p>&copy; 2026 StudyGenie. All rights reserved. Empowering students worldwide.</p>
+  </div>
+</footer>
+
+<script>
+  // Page content definitions
+  const pages = {
+    home: `
+      <div class="container">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>Study Smarter with AI-Powered Learning</h1>
+            <p>Join StudyGenie — your intelligent study companion that transforms notes, solves doubts, and builds personalized learning paths. Learn faster, retain longer.</p>
+            <a href="#" class="btn btn-primary" data-page="contact"><i class="fas fa-rocket"></i> Get Started</a>
+          </div>
+          <div class="hero-image">
+            <svg width="300" height="250" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="50" y="80" width="300" height="160" rx="24" fill="#EDE9FE" stroke="#C4B5FD" stroke-width="2"/>
+              <path d="M100 130h200M100 170h150M100 210h120" stroke="#6C2BD9" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="320" cy="130" r="20" fill="#6C2BD9" fill-opacity="0.2" stroke="#6C2BD9" stroke-width="2"/>
+              <text x="140" y="115" font-family="Inter" font-weight="bold" fill="#3A0CA3" font-size="14">AI Study Assistant</text>
+            </svg>
+          </div>
+        </div>
+        <h2 class="section-title">Powerful Features</h2>
+        <div class="features-grid">
+          <div class="feature-card"><div class="feature-icon">📚</div><h3>Smart Notes</h3><p>Auto-generate notes from lectures.</p></div>
+          <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI Doubt Solver</h3><p>Instant answers 24/7.</p></div>
+          <div class="feature-card"><div class="feature-icon">📈</div><h3>Progress Tracking</h3><p>Monitor your learning journey.</p></div>
+          <div class="feature-card"><div class="feature-icon">🎯</div><h3>Personalized Paths</h3><p>Custom study recommendations.</p></div>
+        </div>
+      </div>
+    `,
+    about: `
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <h2>About StudyGenie</h2>
+            <p>Founded in 2024, StudyGenie is on a mission to democratize education through artificial intelligence. We believe every student deserves a personalized learning companion that adapts to their unique style.</p>
+            <p>Our platform uses cutting-edge AI models to generate smart notes, solve doubts instantly, and provide actionable insights into learning progress.</p>
+            <div class="stats">
+              <div class="stat-item"><div class="stat-number">10K+</div><div>Active Students</div></div>
+              <div class="stat-item"><div class="stat-number">50K+</div><div>Doubts Solved</div></div>
+              <div class="stat-item"><div class="stat-number">98%</div><div>Satisfaction Rate</div></div>
+            </div>
+          </div>
+          <div class="hero-image">
+            <svg width="280" height="280" viewBox="0 0 300 300" fill="none">
+              <circle cx="150" cy="150" r="100" fill="#EDE9FE" stroke="#C4B5FD" stroke-width="3"/>
+              <path d="M120 130h60M120 160h40" stroke="#6C2BD9" stroke-width="4"/>
+              <circle cx="150" cy="180" r="15" fill="#6C2BD9" opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    `,
+    services: `
+      <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+          <div class="service-card"><div class="service-icon">📝</div><h3>Smart Note Generation</h3><p>Convert lectures, PDFs, and videos into structured notes automatically.</p></div>
+          <div class="service-card"><div class="service-icon">💬</div><h3>AI Tutoring</h3><p>Get step-by-step explanations for any subject, anytime.</p></div>
+          <div class="service-card"><div class="service-icon">📊</div><h3>Analytics Dashboard</h3><p>Track strengths, weaknesses, and study patterns.</p></div>
+          <div class="service-card"><div class="service-icon">🎓</div><h3>Exam Preparation</h3><p>Personalized test prep and mock exams.</p></div>
+          <div class="service-card"><div class="service-icon">🤝</div><h3>Group Study</h3><p>Collaborative AI-powered study rooms.</p></div>
+          <div class="service-card"><div class="service-icon">📱</div><h3>Mobile App</h3><p>Learn on the go with our iOS/Android app.</p></div>
+        </div>
+      </div>
+    `,
+    contact: `
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+          <div class="contact-form">
+            <h3>Send us a message</h3>
+            <form id="contactForm">
+              <div class="form-group"><input type="text" placeholder="Your Name" required></div>
+              <div class="form-group"><input type="email" placeholder="Email Address" required></div>
+              <div class="form-group"><textarea rows="4" placeholder="Your Message" required></textarea></div>
+              <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> Send Message</button>
+            </form>
+          </div>
+          <div class="contact-info">
+            <h3><i class="fas fa-address-card"></i> Contact Info</h3>
+            <div class="contact-detail"><i class="fas fa-envelope"></i> hello@studyGenie.ai</div>
+            <div class="contact-detail"><i class="fas fa-phone"></i> +1 (800) 234-5678</div>
+            <div class="contact-detail"><i class="fas fa-map-marker-alt"></i> 123 AI Avenue, San Francisco, CA</div>
+            <div class="contact-detail"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM PST</div>
+          </div>
+        </div>
+      </div>
+    `
+  };
+
+  // Track active page
+  let currentPage = 'home';
+
+  // Render page function
+  function renderPage(page) {
+    if (pages[page]) {
+      document.getElementById('mainContent').innerHTML = pages[page];
+      currentPage = page;
+      updateActiveNavLink(page);
+      // Attach contact form handler if on contact page
+      if (page === 'contact') {
+        const form = document.getElementById('contactForm');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you! Your message has been sent. (Demo)');
+            form.reset();
+          });
+        }
+      }
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // Update active class on nav links
+  function updateActiveNavLink(page) {
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.getAttribute('data-page') === page) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // Navigation event handler
+  function navigateTo(page) {
+    if (page && pages[page]) {
+      renderPage(page);
+      // Update URL hash without reload
+      window.location.hash = page;
+      // Close mobile menu if open
+      const navMenu = document.getElementById('navMenu');
+      const hamburger = document.getElementById('hamburgerBtn');
+      if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  // Setup event listeners
+  function setupNavigation() {
+    // Nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = link.getAttribute('data-page');
+        if (page) navigateTo(page);
+      });
+    });
+    
+    // Footer links
+    document.querySelectorAll('.footer-links a, .footer-brand a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const page = link.getAttribute('data-page');
+        if (page) {
+          e.preventDefault();
+          navigateTo(page);
+        }
+      });
+    });
+    
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      if (navMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu on link click (mobile)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navMenu.classList.contains('active')) {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+  }
+
+  // Handle hash change for deep linking
+  function handleHashChange() {
+    const hash = window.location.hash.substring(1);
+    if (hash && pages[hash]) {
+      navigateTo(hash);
+    } else if (!hash) {
+      navigateTo('home');
+    }
+  }
+
+  // Initialize
+  function init() {
+    setupNavigation();
+    // Load initial page based on hash or default home
+    const initialHash = window.location.hash.substring(1);
+    if (initialHash && pages[initialHash]) {
+      renderPage(initialHash);
+      currentPage = initialHash;
+      updateActiveNavLink(initialHash);
+    } else {
+      renderPage('home');
+      updateActiveNavLink('home');
+    }
+    window.addEventListener('hashchange', handleHashChange);
+  }
+
+  init();
+</script>
+</body>
+</html>
